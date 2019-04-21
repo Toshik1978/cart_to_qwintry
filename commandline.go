@@ -9,13 +9,15 @@ import (
 
 // CommandLine declare command line parameters
 type CommandLine struct {
-	FilePath  string
-	IsCarters bool
+	FilePath     string
+	TemplatePath string
+	IsCarters    bool
 }
 
 // ReadCommandLine retrieve command line parameters
 func ReadCommandLine() CommandLine {
-	flag.String("file", "", "path to file with HTML")
+	flag.String("cart", "", "path to file with cart's HTML")
+	flag.String("template", "", "path to file with Qwintry HTML template")
 	flag.Bool("carters", false, "set to parse Carters cart")
 
 	pflag.CommandLine.AddGoFlagSet(flag.CommandLine)
@@ -26,7 +28,8 @@ func ReadCommandLine() CommandLine {
 	}
 
 	return CommandLine{
-		FilePath:  viper.GetString("file"),
-		IsCarters: viper.GetBool("carters"),
+		FilePath:     viper.GetString("cart"),
+		TemplatePath: viper.GetString("template"),
+		IsCarters:    viper.GetBool("carters"),
 	}
 }

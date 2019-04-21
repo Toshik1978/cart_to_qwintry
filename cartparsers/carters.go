@@ -1,7 +1,6 @@
 package cartparsers
 
 import (
-	"fmt"
 	"io"
 	"net/http"
 	"regexp"
@@ -73,8 +72,6 @@ func (p *cartersParser) parseProduct(product *goquery.Selection) {
 		ProductPrice: p.getPrice(product, cartersProductPrice),
 	}
 	cartItem.ProductPrice /= float64(cartItem.ProductQty)
-
-	fmt.Printf("%+v\n", cartItem)
 
 	if len(cartItem.ProductName) > 0 {
 		if p.result == nil {

@@ -20,7 +20,9 @@ func isFileExists(filePath string) bool {
 func main() {
 	cmdLine := ReadCommandLine()
 
-	if len(cmdLine.FilePath) == 0 || !isFileExists(cmdLine.FilePath) {
+	if len(cmdLine.FilePath) == 0 || !isFileExists(cmdLine.FilePath) ||
+		len(cmdLine.TemplatePath) == 0 || !isFileExists(cmdLine.TemplatePath) {
+
 		flag.Usage()
 		os.Exit(-1)
 	}

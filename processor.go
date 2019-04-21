@@ -22,6 +22,10 @@ func Process(cmdLine CommandLine) error {
 		return errors.New("failed get parser")
 	}
 
-	_, err = parser.Parse(file)
-	return err
+	result, err := parser.Parse(file)
+	if err != nil {
+		return errors.Wrap(err, "failed to parse cart")
+	}
+
+	return SaveTemplate(cmdLine.TemplatePath, result)
 }
