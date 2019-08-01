@@ -16,7 +16,7 @@ func Process(cmdLine CommandLine) error {
 
 	var parser cartparsers.CartParser
 	if cmdLine.IsCarters {
-		parser = cartparsers.NewCartersParser()
+		parser = cartparsers.NewCartersParser(cmdLine.Username, cmdLine.Password)
 	}
 	if parser == nil {
 		return errors.New("failed get parser")

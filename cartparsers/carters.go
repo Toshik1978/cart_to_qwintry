@@ -13,7 +13,7 @@ import (
 
 const (
 	cartersUrl = "https://carters.com"
-	userAgent  = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36"
+	userAgent  = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36"
 
 	cartersCartName  = "#cart-items-form"
 	cartersAttrsName = ".mini-cart-attributes"
@@ -30,12 +30,17 @@ const (
 
 // cartersParser implements CartParser for Carters shop
 type cartersParser struct {
-	result []CartItem
+	username string
+	password string
+	result   []CartItem
 }
 
 // NewCartersParser creates new Carter's parser
-func NewCartersParser() CartParser {
-	return &cartersParser{}
+func NewCartersParser(username string, password string) CartParser {
+	return &cartersParser{
+		username: username,
+		password: password,
+	}
 }
 
 // Parse parses Carters shopping cart
@@ -105,6 +110,10 @@ func (p *cartersParser) actualUrl(url string) string {
 	}
 
 	req.Header.Set("User-Agent", userAgent)
+	req.AddCookie(&http.Cookie{
+		Name:  p.username,
+		Value: p.password,
+	})
 	resp, err := client.Do(req)
 	if err != nil {
 		return ""
